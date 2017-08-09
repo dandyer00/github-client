@@ -10,8 +10,8 @@ class githubClient:
     def requestAndParse(self, url):
         r = requests.get(url)
         if(r.ok):
-            self.repoInfo = json.loads(r.text or r.content)
-            return self.repoInfo
+            result = json.loads(r.text or r.content)
+            return result
     
     def getOrgRepoList(self, org):
         url = self.gitHubURL + 'orgs/' + org + '/repos'
@@ -30,5 +30,5 @@ class githubClient:
         return self.requestAndParse(url)
 
     def getRepoIssues(self, repo):
-        url = self.gitHubURL + 'repos/' + self.user + '/' + repo + '/issues/'
+        url = self.gitHubURL + 'repos/' + self.user + '/' + repo + '/issues'
         return self.requestAndParse(url)

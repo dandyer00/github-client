@@ -3,7 +3,7 @@ import clients
 
 if __name__ == '__main__':
     user =  'dandyer00'   
-    repo = 'github-wiki-notification'
+    repo = 'github-client'
     org = 'SUSE'
 
     g = clients.githubClient(user)
@@ -32,3 +32,7 @@ if __name__ == '__main__':
             
     print '\n Issues for %s/%s' % (user, repo)
     l = g.getRepoIssues(repo)
+    for d in l:
+        for k in d:
+            print '%s: %s' % (k, d[k])        
+    
