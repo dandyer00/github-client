@@ -3,8 +3,9 @@ import json
 
 class githubClient:
     
-    def __init__(self, user):
+    def __init__(self, user, org):
         self.user = user
+        self.org = org
         self.gitHubURL = 'https://api.github.com/'
         
     def requestAndParse(self, url):
@@ -12,23 +13,33 @@ class githubClient:
         if(r.ok):
             result = json.loads(r.text or r.content)
             return result
-    
-    def getOrgRepoList(self, org):
-        url = self.gitHubURL + 'orgs/' + org + '/repos'
-        return self.requestAndParse(url)
-             
+#=======================================================
+#users             
     def getUserRepoList(self):
         url = self.gitHubURL + 'users/' + self.user + '/repos'
         return self.requestAndParse(url)
-        
-    def getRepoInfo(self, repo):
-        url = self.gitHubURL + 'repos/' + self.user + '/' + repo
-        return self.requestAndParse(url)
-    
+            
     def getUserProfile(self ):
         url = self.gitHubURL + 'users/' + self.user
         return self.requestAndParse(url)
 
-    def getRepoIssues(self, repo):
-        url = self.gitHubURL + 'repos/' + self.user + '/' + repo + '/issues'
+    
+#=======================================================
+#orgs
+    def getOrgRepoList(self):
+        url = self.gitHubURL + 'orgs/' + self.org + '/repos'
+        return self.requestAndParse(url)
+
+#================================================
+#repos
+    def getRepoInfo(self, owner, repo):
+        url = self.gitHubURL + 'repos/' + owner + '/' + repo
+        return self.requestAndParse(url)
+
+    def getRepoIssues(self, owner, repo):
+        url = self.gitHubURL + 'repos/' + owner + '/' + repo + '/issues'
+        return self.requestAndParse(url)    
+
+    def getAllRepoEvents(self, owner, repo):
+        url = self.gitHubURL + 'repos/' + owner + '/' + repo + '/events'
         return self.requestAndParse(url)
